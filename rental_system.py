@@ -1,4 +1,4 @@
-from vehicle import SUV
+from vehicle import EconomyCar, SUV, LuxuryCar
 from rental import Rental
 
 
@@ -189,10 +189,12 @@ class CarRentalSystem:
 
     def generate_report(self):
         total_vehicles = len(self.vehicles)
+
         available_vehicles = sum(
             1 for vehicle in self.vehicles if vehicle.is_available()
         )
         rented_vehicles = total_vehicles - available_vehicles
+
         total_customers = len(self.customers)
         total_rentals = len(self.rentals)
 
@@ -202,19 +204,37 @@ class CarRentalSystem:
         completed_rentals = sum(
             1 for rental in self.rentals if rental.status == "COMPLETED"
         )
+
+        economy_count = sum(
+            1 for vehicle in self.vehicles
+            if isinstance(vehicle, EconomyCar)
+        )
         suv_count = sum(
-            1 for vehicle in self.vehicles if isinstance(vehicle, SUV)
+            1 for vehicle in self.vehicles
+            if isinstance(vehicle, SUV)
+        )
+        luxury_count = sum(
+            1 for vehicle in self.vehicles
+            if isinstance(vehicle, LuxuryCar)
         )
 
-        print(f"\n===== {self.name} Report =====")
-        print("Total vehicles:", total_vehicles)
-        print("Available vehicles:", available_vehicles)
-        print("Rented vehicles:", rented_vehicles)
-        print("SUVs in fleet:", suv_count)
-        print("Registered customers:", total_customers)
-        print("Total rentals:", total_rentals)
-        print("Active rentals:", active_rentals)
-        print("Completed rentals:", completed_rentals)
-        print("Successful payments:", len(self.payments))
-        print(f"Total revenue: KSh {self.revenue:,.2f}")
-        print("==============================")
+        print("\n=====================================")
+        print("    SAFARIDRIVE MANAGEMENT REPORT")
+        print("=====================================")
+        print(f"Total Vehicles:               {total_vehicles:>3}")
+        print(f"Available Vehicles:           {available_vehicles:>3}")
+        print(f"Rented Vehicles:              {rented_vehicles:>3}")
+        print()
+        print(f"Registered Customers:         {total_customers:>3}")
+        print()
+        print(f"Total Rentals:                {total_rentals:>3}")
+        print(f"Active Rentals:               {active_rentals:>3}")
+        print(f"Completed Rentals:            {completed_rentals:>3}")
+        print()
+        print(f"Total Revenue:      KSh {self.revenue:,.2f}")
+        print("-------------------------------------")
+        print("VEHICLES BY CATEGORY")
+        print(f"Economy Cars:                 {economy_count:>3}")
+        print(f"SUVs:                         {suv_count:>3}")
+        print(f"Luxury Cars:                  {luxury_count:>3}")
+        print("=====================================")
