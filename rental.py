@@ -85,3 +85,11 @@ class Rental:
             print(f"Final Total:      KSh {self.calculate_total():,.0f}")
 
         print("Paid:", self.is_paid())
+
+    
+    def cancel_rental(self):
+        if self.status != "ACTIVE":
+            raise ValueError("Only active rentals can be cancelled.")
+
+        self.status = "CANCELLED"
+        self.vehicle.mark_as_available()

@@ -131,6 +131,15 @@ class CarRentalSystem:
 
         return rental
 
+    
+    def cancel_rental(self, rental):
+        if rental not in self.rentals:
+            raise ValueError("Rental not found in the system.")
+
+        rental.cancel_rental()
+        print(f"Rental {rental.rental_id} has been cancelled.")
+
+
     def process_payment(self, payment):
         rental = payment.rental
 
@@ -187,6 +196,7 @@ class CarRentalSystem:
         if not found_rental:
             print("No completed rentals.")
 
+    
     def generate_report(self):
         total_vehicles = len(self.vehicles)
 
