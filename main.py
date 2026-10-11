@@ -65,3 +65,33 @@ for customer in [customer1, customer2, customer3]:
 
 # Generate the management report
 system.generate_report()
+
+
+# Bonus Feature: Test Rental Cancellation
+print("\n================= RENTAL CANCELLATION =================")
+
+# Add a separate vehicle for the cancellation test
+cancel_car = EconomyCar(
+    "KDN 345E", "Toyota", "Vitz", 2022, 3000
+)
+system.add_vehicle(cancel_car)
+
+# Use an existing registered customer
+cancel_rental = system.rent_vehicle(customer1, cancel_car, 2)
+
+print("Status before cancellation:", cancel_rental.status)
+print("Vehicle available before cancellation:", cancel_car.is_available())
+
+# Cancel the rental
+system.cancel_rental(cancel_rental)
+
+print("Status after cancellation:", cancel_rental.status)
+print("Vehicle available after cancellation:", cancel_car.is_available())
+
+# Confirm that cancelling the same rental twice is rejected
+try:
+    system.cancel_rental(cancel_rental)
+except ValueError as error:
+    print("Expected error:", error)
+
+print("=========================================================")
